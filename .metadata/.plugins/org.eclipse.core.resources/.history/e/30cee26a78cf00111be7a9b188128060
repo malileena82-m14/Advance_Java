@@ -1,0 +1,10 @@
+package org.jdbcs;
+
+public class Q5UpdateOrderStatus {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

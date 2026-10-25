@@ -1,0 +1,57 @@
+/*Assignment 1: Insert a New Employee
+Table: employees
+Description: Develop a JDBC operation to insert a new employee into the database. Accept the employee name, email, salary, department ID, 
+joining date, and city as input values.
+Expected behavior:
+Accept employee details from the user.
+Use a parameterized INSERT statement.
+Display a message indicating whether the employee was inserted successfully.
+Handle invalid department IDs and duplicate email addresses appropriately.
+*/
+
+package org.jdbcs;
+import java.sql.*;
+import java.util.*;
+public class Q1InsertEmployee {
+
+	public static void main(String[] args)throws Exception {
+		com.mysql.cj.jdbc.Driver d = new com.mysql.cj.jdbc.Driver();
+		DriverManager.registerDriver(d);
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localHost:3306/march26", "root","14062004");
+		if(conn!=null)
+		{
+			System.out.println("Database is connected");
+			System.out.println("Insert Employee Data");
+			Scanner xyz = new Scanner(System.in);
+			String name = xyz.nextLine();
+			String email = xyz.nextLine();
+			int sal = xyz.nextInt();
+			int dept_id = xyz.nextInt();
+			String date = xyz.nextLine();
+			String city = xyz.nextLine();
+			PreparedStatement s = conn.prepareStatement("insert into employees values(?,?,?,?,?,?,?)");
+			s.setString(1, name);
+			s.setString(2, email);
+			s.setInt(3, sal);
+			s.setInt(4, dept_id);
+			s.setString(5, date);
+			s.setString(6, city);
+			
+			int value = s.executeUpdate();
+			
+			if(value>0)
+			{
+				System.out.println("Record save Successfully");
+			}
+			else
+			{
+				System.out.println("Record not save Successfully");
+			}
+		}
+		else
+		{
+			System.out.println("Database is not connected");
+		}
+	}
+
+}

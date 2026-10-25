@@ -1,0 +1,43 @@
+/*Assignment 8: Display Orders by Amount and Date
+Table: orders
+Description: Retrieve orders belonging to a selected status and sort them by total amount from highest to lowest, followed by order date from newest to oldest.
+Expected behavior:
+Accept an order status as input.
+Display order ID, customer ID, order date, amount, and status.
+Apply multiple sorting criteria using ORDER BY.
+*/
+
+package org.jdbcs;
+import java.sql.*;
+import java.util.*;
+public class Q8DisplayOrdersAmtDate {
+
+	public static void main(String[] args)throws Exception{
+		com.mysql.cj.jdbc.Driver d = new com.mysql.cj.jdbc.Driver();
+		DriverManager.registerDriver(d);
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localHost:3306/march26","root","14062004");
+		if(conn!=null)
+		{
+			System.out.println("Database is connected");
+			Scanner xyz = new Scanner(System.in);
+			System.out.println("Display Orders Data");
+			System.out.println("Enter Order status");
+			String ostatus = xyz.next();
+			
+			
+			PreparedStatement p = conn.prepareStatement("select *from orders order by total_amount desc,odate asc");
+			p.setString(1, ostatus);
+			ResultSet rs = p.executeQuery();
+			
+			while(rs.next())
+			{
+				System.out.println(rs.getInt(1)+"\t"+rs.getInt(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4)+"\t"+rs.getString(5));
+			}
+		}
+		else
+		{
+			System.out.println("Database not connected");
+		}
+	}
+
+}

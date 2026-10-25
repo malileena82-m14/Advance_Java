@@ -1,0 +1,42 @@
+/*Assignment 6: Display Employees in Salary Order
+Table: employees
+Description: Retrieve all employees and display their details in descending order of salary.
+Expected behavior:
+Display employee ID, name, email, salary, and department ID.
+Show the highest-paid employee first.
+Allow the user to enter a minimum salary to filter the results.
+Use ORDER BY to sort the results.
+*/
+
+
+package org.jdbcs;
+import java.sql.*;
+import java.util.*;
+public class Q6DisplayEmpSalOrder {
+
+	public static void main(String[] args) throws Exception{
+		com.mysql.cj.jdbc.Driver d = new com.mysql.cj.jdbc.Driver();
+		DriverManager.registerDriver(d);
+		
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localHost:3306/march26","root", "14062004");
+		if(conn!=null)
+		{
+			System.out.println("Database is connected");
+			Scanner xyz = new Scanner(System.in);
+			System.out.println("Display Employees Data in Salary Order");
+			
+			PreparedStatement p = conn.prepareStatement("select eid,ename,email,salary,department_id from employees order by salary desc");
+			
+			ResultSet rs = p.executeQuery();
+			while(rs.next())
+			{
+				System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4)+"\t"+rs.getInt(5));
+			}
+		}
+		else
+		{
+			System.out.println("Database not connected");
+		}
+	}
+
+}

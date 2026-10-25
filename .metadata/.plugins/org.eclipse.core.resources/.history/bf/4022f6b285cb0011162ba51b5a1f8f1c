@@ -1,0 +1,10 @@
+package org.jdbcs;
+import java.sql.*;
+public class connection {
+
+	public static void main(String[] args) {
+		com.mysql.cj.jdbc Driver d = new com.mysql.cj.jdbc();
+		DriverManger.registerDriver(d);
+	}
+
+}

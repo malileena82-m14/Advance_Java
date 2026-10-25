@@ -1,0 +1,8 @@
+package org.jdbcs;
+public class Statement
+{
+	public static void main(String []args)throws Exception
+	{
+		com.mysql.cj.jdbc.Driver d = com.mysql.cj.jdbc.Driver();
+	}
+}

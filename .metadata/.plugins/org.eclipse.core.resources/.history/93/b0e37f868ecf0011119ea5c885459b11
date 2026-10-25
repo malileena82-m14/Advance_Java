@@ -1,0 +1,50 @@
+/*Assignment 7: Search Employees by City
+Table: employees
+Description: Retrieve employees belonging to a city entered by the user and display them in alphabetical order by employee name.
+Expected behavior:
+Accept a city name as input.
+Filter employees using a parameterized condition.
+Sort the matching records by employee name.
+Display a suitable message when no employees match.
+*/
+
+
+package org.jdbcs;
+import java.sql.*;
+import java.util.*;
+public class Q7SearchEmpCity {
+
+	public static void main(String[] args)throws Exception {
+		com.mysql.cj.jdbc.Driver d = new com.mysql.cj.jdbc.Driver();
+		DriverManager.registerDriver(d);
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localHost:3306/march26","root","14062004");
+		if(conn!=null)
+		{
+			System.out.println("Database is connected");
+			Scanner xyz = new Scanner(System.in);
+			System.out.println("Search Employees City");
+			System.out.println("Enter city");
+			String city = xyz.next();
+			
+			PreparedStatement p = conn.prepareStatement("select ename,city from employees where city = ? order by ename asc");
+			p.setString(1, city);
+			
+			ResultSet rs = p.executeQuery();
+			boolean flag = false;
+			while(rs.next())
+			{
+				System.out.println(rs.getString(1)+"\t"+rs.getString(2));
+				flag = true;
+			}
+			if(flag)
+			{
+				System.out.println("City is not found");
+			}
+		}
+		else
+		{
+			System.out.println("Database is not connected");
+		}
+	}
+
+}

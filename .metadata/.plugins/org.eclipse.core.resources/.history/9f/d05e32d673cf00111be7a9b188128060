@@ -1,0 +1,55 @@
+/*Assignment 4: Insert a New Department
+Table: departments
+Description: Create a program that inserts a new department using a department name and location provided by the user.
+Expected behavior:
+Accept department name and location.
+Insert the department into the database.
+Display the generated department ID if available.
+Handle database errors appropriately.
+*/
+
+
+package org.jdbcs;
+import java.sql.*;
+import java.util.*;
+public class Q4InsertNewDepartment {
+
+	public static void main(String[] args)throws Exception{
+		com.mysql.cj.jdbc.Driver d = new com.mysql.cj.jdbc.Driver();
+		DriverManager.registerDriver(d);
+		Connection conn  = DriverManager.getConnection("jdbs:mysql://localHost:3306/march26","root", "14062004");
+		if(conn!=null)
+		{
+			System.out.println("Database is connected");
+			System.out.println("Insert new Data");
+			Scanner xyz = new Scanner(System.in);
+			System.out.println("Enter Department Id");
+			int deptId = xyz.nextInt();
+			System.out.println("Enter Department Name");
+			String deptName = xyz.next();
+			System.out.println("Enter location");
+			String location = xyz.next();
+			
+			PreparedStatement s = conn.prepareStatement("insert into departments"+"department_id,department_name,location"+"values(?,?,?)");
+			s.setInt(1, deptId);
+			s.setString(2, location);
+			s.setString(3, location);
+			int value = s.executeUpdate();
+			
+			if(value>0)
+			{
+				System.out.println("Record insert Successfully");
+			}
+			else
+			{
+				System.out.println("Record not insert");
+			}
+		}
+		else
+		{
+			System.out.println("Database not connected");
+		}
+
+	}
+
+}

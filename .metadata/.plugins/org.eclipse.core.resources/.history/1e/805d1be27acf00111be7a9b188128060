@@ -1,0 +1,59 @@
+/*Assignment 5: Update Order Status
+Table: orders
+Description: Update an order's status based on its order ID. The user should be able to change the status to Pending, Completed, or Cancelled.
+Expected behavior:
+Accept order ID and the new status.
+Update only the matching order.
+Display the number of affected rows.
+Validate the status before executing the update.
+*/
+
+package org.jdbcs;
+import java.sql.*;
+import java.util.*;
+public class Q5UpdateOrderStatus {
+
+	public static void main(String[] args)throws Exception{
+		com.mysql.cj.jdbc.Driver d = new com.mysql.cj.jdbc.Driver();
+		DriverManager.registerDriver(d);
+		
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localHost:3306/march26","root", "14062004");
+		if(conn!=null)
+		{
+			System.out.println("Database is connected");
+			Scanner xyz = new Scanner(System.in);
+			System.out.println("Update order Status");
+			System.out.println("Enter Order Id");
+			int id = xyz.nextInt();
+			System.out.println("Enter Order Status");
+			String ostatus = xyz.next();
+			
+			if(ostatus.equalsIgnoreCase("Pending")||ostatus.equalsIgnoreCase("Cancelled")||ostatus.equalsIgnoreCase("Completed"));
+			{
+				PreparedStatement s = conn.prepareStatement("update orders set order_status = ? where oid = ?");
+				s.setString(1, ostatus);
+				s.setInt(2, id);
+				
+				int value = s.executeUpdate();
+				if(value>0)
+				{
+					System.out.println("Record Update Successfully");
+				}
+				else
+				{
+					System.out.println("Record not Update");
+				}
+			}
+			else
+			{
+				System.out.println("Invalid Status Enter Pending,Cancelled,Completed");
+			}
+			
+		}
+		else
+		{
+			System.out.println("Database not connected");
+		}
+	}
+
+}

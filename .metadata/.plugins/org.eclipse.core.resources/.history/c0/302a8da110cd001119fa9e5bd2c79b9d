@@ -1,0 +1,36 @@
+package org.jdbcs;
+import java.sql.*;
+import java.util.*;
+public class UpdateRecord {
+
+	public static void main(String[] args)throws Exception {
+		com.mysql.cj.jdbc.Driver d = new com.mysql.cj.jdbc.Driver();
+		DriverManager.registerDriver(d);
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/march26","root","14062004");
+		if(conn!=null)
+		{
+			System.out.println("Database is connected");
+			System.out.println("Enter name,id and Salary of employee");
+			Scanner xyz = new Scanner(System.in);
+			String name = xyz.next();
+			int id = xyz.nextInt();
+			int sal = xyz.nextInt();
+			Statement s = conn.createStatement();
+			int value = s.executeUpdate("update employee set name ='"+name+"',salary = "+sal+" where id = "+id);
+			if(value>0)
+			{
+				System.out.println("Record Update Successfully");
+			}
+			else
+			{
+				System.out.println("Record not Update Successfully");
+			}
+			
+		}
+		else
+		{
+			System.out.println("Database is not connected");
+		}
+	}
+
+}

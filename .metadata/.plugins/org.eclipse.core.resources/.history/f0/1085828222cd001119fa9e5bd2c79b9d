@@ -1,0 +1,47 @@
+/*Assignment 2: Update Employee Salary
+Table: employees
+Description: Increase or change the salary of an employee based on the employee ID entered by the user.
+Expected behavior:
+Accept employee ID and new salary.
+Update only the employee matching the specified ID.
+Display the number of affected rows.
+Handle the case where the employee ID does not exist.
+*/
+
+
+package org.jdbcs;
+import java.sql.*;
+import java.util.*;
+public class Q2UpdateEmployeeSal {
+
+	public static void main(String[] args)throws Exception {
+		com.mysql.cj.jdbc.Driver d = new com.mysql.cj.jdbc.Driver();
+		DriverManager.registerDriver(d);
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localHost:3306/march26","root","14062004");
+		if(conn!=null)
+		{
+			System.out.println("Database is connected");
+			System.out.println("Update Employees Data");
+			Scanner xyz = new Scanner(System.in);
+			System.out.println("Enter Id");
+			int id = xyz.nextInt();
+			
+			Statement s = conn.createStatement();
+			int value = s.executeUpdate("Update employees set salary where eid = "+id);
+			
+			if(value>0)
+			{
+				System.out.println("Record Update Successfully");
+			}
+			else
+			{
+				System.out.println("Record not update");
+			}
+		}
+		else
+		{
+			System.out.println("Database not connected");
+		}
+	}
+
+}

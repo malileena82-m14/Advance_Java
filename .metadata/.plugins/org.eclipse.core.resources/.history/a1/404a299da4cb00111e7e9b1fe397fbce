@@ -1,0 +1,39 @@
+package org.jdbcs;
+import java.sql.*;
+import java.util.*;
+public class TestUser {
+
+	public static void main(String[] args)throws Exception
+	{
+		com.mysql.cj.jdbc.Driver d = new com.mysql.cj.jdbc.Driver();
+		DriverManager.registerDriver(d);
+		
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/march26","root","14062004");
+		
+		if(conn!=null)
+		{
+			Scanner xyz = new Scanner(System.in);
+			System.out.println("Database is created");
+			System.out.println("Enter id, name and Employee salary");
+			int id = xyz.nextInt();
+			String name = xyz.next();
+			int sal = xyz.nextInt();
+			Statement s = conn.createStatement();
+			int value = s.executeUpdate("insert into employee values("+id+","+name+","+sal+")");
+			
+			if(value>0)
+			{
+				System.out.println("Record is Sucsessfully");
+			}
+			else
+			{
+				System.out.println("Record is not Successfully");
+			}
+		}
+		else
+		{
+			System.out.println("Database is not connected");
+		}
+	}
+
+}
