@@ -1,0 +1,38 @@
+/*Assignment 9: Display Employees with Department Names
+Tables: employees, departments
+Description: Retrieve employee information along with the department name in which each employee works.
+Expected behavior:
+Display employee ID, employee name, salary, and department name.
+Use an INNER JOIN between employees and departments.
+Sort the results by department name and employee name.
+*/
+
+package org.jdbcs;
+import java.sql.*;
+import java.util.*;
+public class Q9DisplayEmpDepartNames {
+
+	public static void main(String[] args)throws Exception {
+		com.mysql.cj.jdbc.Driver d = new com.mysql.cj.jdbc.Driver();
+		DriverManager.registerDriver(d);
+		
+		Connection conn = DriverManager.getConnection("jdbc:mysql://lostHost:3306/march26","root", "14062004");
+		
+		if(conn!=null)
+		{
+			System.out.println("Database is connected");
+			PreparedStatement p = conn.prepareStatement("select e.eid,e.ename,e.salary,d.department_name from Employees e inner join Department d on e.department_id=d.department_id order by department_name,Employee_name");
+			ResultSet rs = p.executeQuery();
+			while(rs.next())
+			{
+				System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getInt(3)+"\t"+rs.getString(4));
+			}
+		}
+		else
+		{
+			System.out.println("Database not connected");
+		}
+
+	}
+
+}

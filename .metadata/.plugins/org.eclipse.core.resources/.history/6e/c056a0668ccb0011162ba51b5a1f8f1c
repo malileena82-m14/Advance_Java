@@ -1,5 +1,0 @@
-package org.jdbcs;
-
-public class Statement {
-
-}
